@@ -35,3 +35,27 @@ app.get("/Cuisine", (req, res) => {
       res.status(500).send();
     });
 });
+
+app.get("/Cuisine/:pk", (req, res) => {
+  let pk = req.params.pk;
+  //   console.log(pk);
+  let myQuery = `SELECT *
+  FROM Cuisine
+  LEFT JOIN Region
+  ON REgion.RegionPK = Cuisine.RegionFK
+  WHERE CuisinePK = ${pk}`;
+
+  db.executeQuery(myQuery)
+    .then((result) => {
+      // console.log("result", result);
+      if (result[0]) {
+        res.send(result[0]);
+      } else {
+        res.status(404).send(`bad request`);
+      }
+    })
+    .catch((err) => {
+      console.log("error in /Cuisine/:pk", err);
+      res.status(500).send();
+    });
+});
