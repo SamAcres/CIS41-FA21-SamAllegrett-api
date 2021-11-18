@@ -1,11 +1,11 @@
 const sql = require("mssql");
-const cuisineConfig = require("./config.js");
+const rockwellConfig = require("./config.js");
 
 const config = {
-  user: cuisineConfig.DB.user,
-  password: cuisineConfig.DB.password,
-  server: cuisineConfig.DB.server, // You can use 'localhost\\instance' to connect to named instance
-  database: cuisineConfig.DB.database,
+  user: rockwellConfig.DB.user,
+  password: rockwellConfig.DB.password,
+  server: rockwellConfig.DB.server,
+  database: rockwellConfig.DB.database,
 };
 
 async function executeQuery(aQuery) {
@@ -17,8 +17,8 @@ async function executeQuery(aQuery) {
 }
 
 // executeQuery(`SELECT *
-// FROM Cuisine
-// LEFT JOIN Region
-// ON REgion.RegionPK = Cuisine.RegionFK`);
+//   FROM movie
+//   LEFT JOIN Genre
+//   ON genre.GenrePK = movie.GenreFK`);
 
 module.exports = { executeQuery: executeQuery };
