@@ -19,9 +19,9 @@ const auth = async (req, res, next) => {
     let contactPK = decoded.pk;
 
     //2. compare token with database
-    let query = `SELECT ContactPK, NameFirst, NameLast, Email
-        FROM Contact
-        WHERE ContactPK=${contactPK} and token = '${myToken}'`;
+    let query = `SELECT ContactPK, firstName, lastName, Email
+        FROM Author
+        WHERE AuthorPK=${contactPK} and token = '${myToken}'`;
 
     let returnedUser = await db.executeQuery(query);
     console.log("returned user", returnedUser);
