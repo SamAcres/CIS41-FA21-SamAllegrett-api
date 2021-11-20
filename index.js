@@ -30,20 +30,20 @@ app.get("/", (req, res) => {
 // app.post()
 // app.put()
 
-app.post("/contacts/logout", auth, (req, res) => {
-  let query = `UPDATE Contact
-  SET token = NULL
-  WHERE ContactPK = ${req.contact.ContactPK}`;
+// app.post("/contacts/logout", auth, (req, res) => {
+//   let query = `UPDATE Contact
+//   SET token = NULL
+//   WHERE ContactPK = ${req.contact.ContactPK}`;
 
-  db.executeQuery(query)
-    .then(() => {
-      res.status(200).send();
-    })
-    .catch((err) => {
-      console.log("error in POST /contacts/logout", err);
-      res.status(500).send();
-    });
-});
+//   db.executeQuery(query)
+//     .then(() => {
+//       res.status(200).send();
+//     })
+//     .catch((err) => {
+//       console.log("error in POST /contacts/logout", err);
+//       res.status(500).send();
+//     });
+// });
 
 // app.get("/reviews/me", auth, async(req,res)=>{
 //   //1. get the ContactPK
@@ -57,38 +57,38 @@ app.post("/contacts/logout", auth, (req, res) => {
 
 // app.delete("/reviews/:pk")
 
-app.post("/reviews", auth, async (req, res) => {
+app.post("/Blog", auth, async (req, res) => {
   try {
-    let movieFK = req.body.movieFK;
-    let summary = req.body.summary;
-    let rating = req.body.rating;
+    let Blog = req.body.Blog;
+    let Summary = req.body.Summary;
+    let Ratings = req.body.Ratings;
 
-    if (!movieFK || !summary || !rating || !Number.isInteger(rating)) {
+    if (!Blog || !Summary || !Rating || !Number.isInteger(Rating)) {
       return res.status(400).send("bad request");
     }
 
-    summary = summary.replace("'", "''");
+    Summary = Summary.replace("'", "''");
 
     // console.log("summary", summary);
     // console.log("here is the contact", req.contact);
 
-    let insertQuery = `INSERT INTO review(Summary, Rating, MovieFK, ContactFK)
-    OUTPUT inserted.ReviewPK, inserted.Summary, inserted.Rating, inserted.MovieFK
-    VALUES('${summary}', '${rating}', '${movieFK}',${req.contact.ContactPK})`;
+    let insertQuery = `INSERT INTO Blog(Summary, Ratings, Blog, AuthorFK)
+    OUTPUT inserted.BlogPK, inserted.Summary, inserted.Ratings, inserted.AuthorFK
+    VALUES('${Summary}', '${Ratings}', '${Blog}',${req.Author.AuthorFK})`;
 
     let insertedReview = await db.executeQuery(insertQuery);
-    console.log("inserted review", insertedReview);
+    console.log("inserted review", insertQuery);
     // res.send("Here is the response");
 
     res.status(201).send(insertedReview[0]);
   } catch (err) {
-    console.log("error in POST /reviews", err);
+    console.log("error in POST /Blog", err);
     res.status(500).send();
   }
 });
 
 app.get("/author/me", auth, (req, res) => {
-  res.send(req.contact);
+  res.send(req.Author);
 });
 //Question 4 complete
 app.post("/author/login", async (req, res) => {

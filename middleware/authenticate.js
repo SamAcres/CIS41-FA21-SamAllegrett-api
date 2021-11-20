@@ -16,19 +16,19 @@ const auth = async (req, res, next) => {
     let decoded = jwt.verify(myToken, rockwellConfig.JWT);
     console.log(decoded);
 
-    let contactPK = decoded.pk;
+    let AuthorPK = decoded.pk;
 
     //2. compare token with database
-    let query = `SELECT ContactPK, NameFirst, NameLast, Email
-        FROM Contact
-        WHERE ContactPK=${contactPK} and token = '${myToken}'`;
+    let query = `SELECT AuthorFK, firstName, lastName, Email
+        FROM Author
+        WHERE AuthorPK=${AuthorPK} and token = '${myToken}'`;
 
     let returnedUser = await db.executeQuery(query);
     console.log("returned user", returnedUser);
 
     //3. save user information in the request
     if (returnedUser[0]) {
-      req.contact = returnedUser[0];
+      req.Author = returnedUser[0];
       next();
     } else {
       return res.status(401).send("Invalid credentials");
