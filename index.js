@@ -74,10 +74,10 @@ app.post("/Blog", auth, async (req, res) => {
 
     let insertQuery = `INSERT INTO Blog(Summary, Ratings, Blog, AuthorFK)
     OUTPUT inserted.BlogPK, inserted.Summary, inserted.Ratings, inserted.AuthorFK
-    VALUES('${Summary}', '${Ratings}', '${Blog}',${req.Author.AuthorFK})`;
+    VALUES('${Summary}', '${Ratings}', '${Blog}',${AuthorFK})`;
 
     let insertedReview = await db.executeQuery(insertQuery);
-    console.log("inserted review", insertQuery);
+    console.log("inserted review", insertedReview);
     // res.send("Here is the response");
 
     res.status(201).send(insertedReview[0]);
