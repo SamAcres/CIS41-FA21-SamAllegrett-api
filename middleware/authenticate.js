@@ -16,12 +16,12 @@ const auth = async (req, res, next) => {
     let decoded = jwt.verify(myToken, rockwellConfig.JWT);
     console.log(decoded);
 
-    let contactPK = decoded.pk;
+    let AuthorPK = decoded.pk;
 
     //2. compare token with database
-    let query = `SELECT ContactPK, firstName, lastName, Email
+    let query = `SELECT AuthorPK, firstName, lastName, Email
         FROM Author
-        WHERE AuthorPK=${contactPK} and token = '${myToken}'`;
+        WHERE AuthorPK=${AuthorPK} and token = '${myToken}'`;
 
     let returnedUser = await db.executeQuery(query);
     console.log("returned user", returnedUser);
